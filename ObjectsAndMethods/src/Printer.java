@@ -35,12 +35,9 @@ public class Printer {
         return count;
     }
 
-   /* public int getPrintedPagesCount() {
-        return
+    public static int getPrintedPagesCount() {
+        return count;
     }
-    */
-
-
 
 
     public static void main(String[] args) {
@@ -50,6 +47,7 @@ public class Printer {
         printer.append("текст3", "Ууууу");
         System.out.println("Количество страниц для печати " + printer.getPendingPagesCount());
         printer.print();
+        System.out.println("Количество распечатанных принтером страниц - " + Printer.getPrintedPagesCount());
 
     }
 
