@@ -3,7 +3,7 @@ import java.sql.SQLOutput;
 public class Printer {
     private int count = 0; // общее количество страниц на печать
     private String queue = ""; //список документов на печать
-    private int printedPagesCount = 0;//количество напечатанных страниц
+    private static int printedPagesCount = 0;//количество напечатанных страниц
 
     public void append(String docText, String title, int pagesCount) {
         if (!docText.isEmpty()) {
@@ -21,13 +21,15 @@ public class Printer {
         count = 0;
     }
 
+
     public void print() {
         if (queue.isEmpty()) {
             System.out.println("Нет документов для печати");
         } else {
             System.out.println(queue);
-            printedPagesCount = printedPagesCount + count;
+            getPrintedPagesCount();
         }
+        printedPagesCount = printedPagesCount + count;
         clear();
     }
 
@@ -36,8 +38,9 @@ public class Printer {
     }
 
     public int getPrintedPagesCount() {
-        return printedPagesCount;
+        return printedPagesCount + count;
     }
+
 
     public static void main(String[] args) {
         Printer printer = new Printer();
