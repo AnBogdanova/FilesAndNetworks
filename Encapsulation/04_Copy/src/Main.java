@@ -5,7 +5,7 @@ public class Main {
         demensions = demensions.setLength(200);
         demensions = demensions.setHeight(100);
 
-        CargoInfo box = new CargoInfo(demensions, 60, "Moscow");
+        CargoInfo box = new CargoInfo(demensions, 60, "Moscow", true, false, "1546Df13");
         System.out.println(box);
 
         box = box.setDelivery_address("Tokyo");
