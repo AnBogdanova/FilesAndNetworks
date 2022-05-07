@@ -1,14 +1,21 @@
 public class Basket {
 
+
     private static int count = 0;
+    private static int basketCount = 0;
     private String items = "";
     private int totalPrice = 0;
     private int limit;
     private double totalWeight = 0;
 
+    private static class AllBaskets {
+        static int itemsCount = 0;
+        static int allBasketCost = 0;
+    }
 
     public Basket() {
         increaseCount(1);
+        basketCount = basketCount + 1;
         items = "Список товаров:";
         this.limit = 1000000;
     }
@@ -36,8 +43,8 @@ public class Basket {
         add(name, price, 1, 10.5);
     }
 
-    public void add(String name, int price, int count) {
-        add(name, price, count, 10.5);
+    public void add(String name, int price, int productCount) {
+        add(name, price, productCount, 10.5);
 
     }
 
@@ -60,6 +67,8 @@ public class Basket {
                 count + " шт. " + totalWeight + " г. -" + price;
         totalPrice = totalPrice + count * price;
         totalWeight = totalWeight + count * weight;
+        AllBaskets.itemsCount += count;
+        AllBaskets.allBasketCost = AllBaskets.allBasketCost + price * count;
     }
 
     public void clear() {
@@ -89,4 +98,21 @@ public class Basket {
             System.out.println(items);
         }
     }
+
+    public static int getAllBasketsItemsCount() {
+        return AllBaskets.itemsCount;
+    }
+
+    public static int getAllBasketCost() {
+        return AllBaskets.allBasketCost;
+    }
+
+    public static int getAverageBasketCost() {
+        return AllBaskets.allBasketCost / Basket.count;
+    }
+
+    public static double getAverageProductPrice() {
+        return AllBaskets.allBasketCost / AllBaskets.itemsCount;
+    }
+
 }
