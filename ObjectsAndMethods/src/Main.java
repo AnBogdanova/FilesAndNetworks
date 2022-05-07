@@ -11,7 +11,6 @@ public class Main {
         basket1.add("bread", 50, 1, 150);
         System.out.println("Стоимость корзины - " + basket1.getTotalPrice());
 
-
         System.out.println("Количество корзин - " + Basket.getCount() + "\n" +
                 "Средняя стоимость корзины - " + Basket.getAverageBasketCost() + "\n" +
                 "Средняя стоимость продукта - " + Basket.getAverageProductPrice());

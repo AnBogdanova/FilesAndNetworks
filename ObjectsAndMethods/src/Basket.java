@@ -114,5 +114,4 @@ public class Basket {
     public static double getAverageProductPrice() {
         return AllBaskets.allBasketCost / AllBaskets.itemsCount;
     }
-
 }
