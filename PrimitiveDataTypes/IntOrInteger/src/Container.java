@@ -1,8 +1,8 @@
 public class Container {
-    private Integer count = 0;
+    private Integer count;
 
     public void addCount(int value) {
-        count = count + value;
+        this.count = value;
     }
 
     public int getCount() {
