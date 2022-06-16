@@ -14,9 +14,9 @@ public class Arithmetic {
 
     public int  getSum() {return x + y;}
 
-    int getProductOfNumbers() {return x * y;}
+    public int getProductOfNumbers() {return x * y;}
 
-    int getMin() {
+    public int getMin() {
         if(x < y) {return x;}
         else {return y;}
     }
