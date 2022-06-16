@@ -26,6 +26,4 @@ public class Book {
         this.pagesCount = pagesCount;
         this.icbn = icbn;
     }
-
-
 }
