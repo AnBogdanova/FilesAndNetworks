@@ -1,6 +1,4 @@
-package main.java;
-
-import main.java.Employee;
+package ru.skillbox;
 
 import java.util.Comparator;
 import java.util.List;

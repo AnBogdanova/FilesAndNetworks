@@ -1,5 +1,5 @@
-import main.java.Employee;
-import main.java.Main;
+import ru.skillbox.Employee;
+import ru.skillbox.Main;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
