@@ -19,13 +19,17 @@ public class CustomerStorage {
         String[] components = data.split("\\s+");
         if(components.length!=4) {
             throw new ArrayIndexOutOfBoundsException("Неверное количество элементов");
-        } else if (!Pattern.matches(("[^|\\w](\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*)"), components[INDEX_EMAIL].trim()) ||
-                !Pattern.matches(("^7[0-9]{10}"), components[INDEX_PHONE].trim())) {
-            throw new IllegalStateException("Неверный формат");
+        } else if (!Pattern.matches(("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"), components[INDEX_EMAIL].trim()) ||
+                !Pattern.matches(("\\+7[0-9]{10}"), components[INDEX_PHONE].trim())) {
+            throw new IllegalStateException();
         } else {
             String name = components[INDEX_NAME].trim() + " " + components[INDEX_SURNAME].trim();
             storage.put(name, new Customer(name, components[INDEX_PHONE], components[INDEX_EMAIL]));
         }
+
+    }
+    class IllegalFormat extends Exception {
+
     }
 
     public void listCustomers() {
