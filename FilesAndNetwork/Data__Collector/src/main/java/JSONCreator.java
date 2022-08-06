@@ -2,9 +2,9 @@ import org.json.simple.JSONObject;
 
 import java.io.FileWriter;
 
-public class JSONWriter {
+public class JSONCreator {
 
-    public JSONWriter() {
+    public JSONCreator() {
     }
 
     public void writeInJSONFile(JSONObject object, String path) throws Exception {

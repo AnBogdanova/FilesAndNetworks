@@ -20,8 +20,10 @@ public class Main {
         JSONArray connectionsArray = parser.writeConnectionsInJSON(connections);
         MetroMap metro = new MetroMap(stationsObject, linesArray, connectionsArray);
 
-        JSONWriter jsonWriter = new JSONWriter();
+        JSONCreator jsonWriter = new JSONCreator();
         jsonWriter.writeInJSONFile(metro.getMetroObject(), "FilesAndNetwork/Data__Collector/src/main/resourse/metro.json");
+        JSONReader jsonReader = new JSONReader();
+        jsonReader.getAmountOfStations("FilesAndNetwork/Data__Collector/src/main/resourse/metro.json");
 
     }
 }

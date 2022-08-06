@@ -63,12 +63,11 @@ public class Parser {
     public void parseConnection() {
         Elements dataList = document.getElementsByClass("js-metro-stations t-metrostation-list-table");
         for(Element element : dataList) {
-            Elements connectionsList = element.select("a:has(span[title])");
+            Elements connectionsList = element.select("p:has(span[title])");
             for(Element connectionElement : connectionsList) {
                 String station = connectionElement.text();
-                String stationNorm = StringEscapeUtils.escapeHtml4(station);
-                int indexSpace = stationNorm.lastIndexOf(";");
-                String stationName = stationNorm.substring(indexSpace + 1).trim();
+                int indexSpace = station.lastIndexOf(";");
+                String stationName = station.substring(indexSpace + 1).trim();
 
                 Connections stationsConnection = new Connections();
                 stationsConnection.addStation(new Station(stationName, element.attr("data-line")));
