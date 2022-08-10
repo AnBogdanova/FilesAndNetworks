@@ -1,8 +1,20 @@
 package core;
 
 public class Station implements Comparable<Station>{
-    private final String numberLine;
-    private final String name;
+    private String numberLine;
+    private String name;
+    private String lineName;
+    private String date;
+    private String depth;
+    private boolean hasConnection;
+
+    public Station(String name, String lineName, String date, String depth, boolean hasConnection) {
+        this.name = name;
+        this.lineName = lineName;
+        this.date = date;
+        this.depth = depth;
+        this.hasConnection = hasConnection;
+    }
 
     public Station(String name, String numberLine) {
         this.name = name;
