@@ -46,19 +46,7 @@ public class DataCollector {
 
         File[] files = doc.listFiles();
         for (File file : files) {
-            String filePath;
-            if (file.isFile()) {
-                DATA_FILE = file.getAbsolutePath(); //filePath
-                if (file.getName().endsWith("*.json")) {
-                    getDatesFromJson(file);
-                }
-
-                if (file.getName().endsWith(".csv")) {
-                    getDatesFromCsv(file);
-                }
-            } else {
-                fileReader(file.getAbsolutePath());
-            }
+            fileReader(file.getAbsolutePath());
         }
         return listStations;
     }
