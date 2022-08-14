@@ -17,6 +17,12 @@ import java.util.List;
 import java.util.Map;
 
 public class DataCollector {
+    @Override
+    public String toString() {
+        return "DataCollector{" +
+                "listStations=" + listStations +
+                '}';
+    }
 
     Map<String,Station> listStations = new HashMap<>();
     String DATA_FILE;
@@ -28,54 +34,13 @@ public class DataCollector {
     public Map<String, Station> fileReader(String path) throws ParseException, FileNotFoundException {
         File doc = new File(path);
         if (doc.isFile()) {
-            DATA_FILE = doc.getPath();
+            DATA_FILE = doc.getAbsolutePath();
             if (doc.getName().endsWith(".json")) {
-                JSONParser parser = new JSONParser();
-                JSONArray jsonData = (JSONArray) parser.parse(getJsonFile());
-                jsonData.forEach(stationObject -> {
-                    JSONObject stationJsonObject = (JSONObject) stationObject;
-                    String stationName = (String) stationJsonObject.get("name");
-                    if (!listStations.containsKey(stationName)) {
-                        listStations.put(stationName, new Station(stationName));
-                    }
-                    if (doc.getName().startsWith("dates")) {
-                        String date = (String) stationJsonObject.get("dates");
-                        listStations.get(stationName).setDate(date);
-                    }
-                    else if (doc.getName().startsWith("depths")) {
-                        String date = (String) stationJsonObject.get("depth_meters");
-                        listStations.get(stationName).setDate(date);
-                    }
-                });
+                getDatesFromJson(doc);
             }
 
             if (doc.getName().endsWith(".csv")) {
-                String filePath = doc.getPath();
-                BufferedReader reader = new BufferedReader(new FileReader(filePath)); //filePath
-                try {
-                    String splitBy = ",";
-                    String line = "";
-                    while ((line = reader.readLine()) != null) {
-                        String[] lines = line.split(splitBy);
-                        for (int i = 0; i < lines.length; i++) {
-                            if (i%2 == 0) {
-                                String stationName = lines[i];
-                                if (!listStations.containsKey(stationName)) {
-                                    listStations.put(stationName, new Station(stationName));
-                                }
-                                if (doc.getName().startsWith("dates")) {
-                                    listStations.get(stationName).setDate(lines[++i]);
-                                }
-                                else if (doc.getName().startsWith("depth")) {
-                                    listStations.get(stationName).setDepth(lines[++i]);
-                                }
-                            }
-                        }
-                    }
-                }
-                catch(Exception e) {
-                    e.printStackTrace();
-                }
+               getDatesFromCsv(doc);
             }
         }
 
@@ -83,60 +48,66 @@ public class DataCollector {
         for (File file : files) {
             String filePath;
             if (file.isFile()) {
-                DATA_FILE = file.getPath(); //filePath
-                if (file.getName().endsWith(".json")) {
-                    JSONParser parser = new JSONParser();
-                    JSONArray jsonData = (JSONArray) parser.parse(getJsonFile());
-                    jsonData.forEach(stationObject -> {
-                        JSONObject stationJsonObject = (JSONObject) stationObject;
-                        String stationName = (String) stationJsonObject.get("name");
-                        if (!listStations.containsKey(stationName)) {
-                            listStations.put(stationName, new Station(stationName));
-                        }
-                        if (file.getName().startsWith("dates")) {
-                            String date = (String) stationJsonObject.get("dates");
-                            listStations.get(stationName).setDate(date);
-                        }
-                        else if (file.getName().startsWith("depths")) {
-                            String date = (String) stationJsonObject.get("depth_meters");
-                            listStations.get(stationName).setDate(date);
-                        }
-                    });
+                DATA_FILE = file.getAbsolutePath(); //filePath
+                if (file.getName().endsWith("*.json")) {
+                    getDatesFromJson(file);
                 }
 
                 if (file.getName().endsWith(".csv")) {
-                    String filePath1 = file.getPath();
-                    BufferedReader reader = new BufferedReader(new FileReader(filePath1)); //filePath
-                    try {
-                        String splitBy = ",";
-                        String line = "";
-                        while ((line = reader.readLine()) != null) {
-                            String[] lines = line.split(splitBy);
-                            for (int i = 0; i < lines.length; i++) {
-                                if (i%2 == 0) {
-                                    String stationName = lines[i];
-                                    if (!listStations.containsKey(stationName)) {
-                                        listStations.put(stationName, new Station(stationName));
-                                    }
-                                    if (file.getName().startsWith("dates")) {
-                                        listStations.get(stationName).setDate(lines[++i]);
-                                    }
-                                    else if (file.getName().startsWith("depth")) {
-                                        listStations.get(stationName).setDepth(lines[++i]);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    catch(Exception e) {
-                        e.printStackTrace();
-                    }
+                    getDatesFromCsv(file);
                 }
             } else {
                 fileReader(file.getAbsolutePath());
             }
         }
         return listStations;
+    }
+
+    private void getDatesFromJson(File doc) throws ParseException {
+        JSONParser parser = new JSONParser();
+        JSONArray jsonData = (JSONArray) parser.parse(getJsonFile());
+        jsonData.forEach(stationObject -> {
+            JSONObject stationJsonObject = (JSONObject) stationObject;
+            String stationName = (String) stationJsonObject.get("name");
+            if (!listStations.containsKey(stationName)) {
+                listStations.put(stationName, new Station(stationName));
+            }
+            if (doc.getName().startsWith("dates")) {
+                String date = (String) stationJsonObject.get("dates");
+                listStations.get(stationName).setDate(date);
+            }
+            else if (doc.getName().startsWith("depths")) {
+                String date = (String) stationJsonObject.get("depth_meters");
+                listStations.get(stationName).setDate(date);
+            }
+        });
+    }
+
+    private void getDatesFromCsv(File doc) throws FileNotFoundException {
+        String filePath = doc.getAbsolutePath();
+        BufferedReader reader = new BufferedReader(new FileReader(filePath)); //filePath
+        try {
+            String splitBy = ",";
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                String[] lines = line.split(splitBy);
+                for (int i = 0; i < lines.length; i++) {
+                    if (i % 2 == 0) {
+                        String stationName = lines[i];
+                        if (!listStations.containsKey(stationName)) {
+                            listStations.put(stationName, new Station(stationName));
+                        }
+                        if (doc.getName().startsWith("dates")) {
+                            listStations.get(stationName).setDate(lines[++i]);
+                        } else if (doc.getName().startsWith("depth")) {
+                            listStations.get(stationName).setDepth(lines[++i]);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private String getJsonFile() {
@@ -149,6 +120,7 @@ public class DataCollector {
         }
         return builder.toString();
     }
+
 
     private String getCsvFile() {
         StringBuilder builder = new StringBuilder();
