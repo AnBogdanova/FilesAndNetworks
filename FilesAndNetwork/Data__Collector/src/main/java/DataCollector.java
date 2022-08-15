@@ -25,7 +25,7 @@ public class DataCollector {
     }
 
     Map<String,Station> listStations = new HashMap<>();
-    String DATA_FILE;
+    String DATA_FILE = "";
 
     public Map<String, Station> getListStations() {
         return listStations;
@@ -43,11 +43,13 @@ public class DataCollector {
                getDatesFromCsv(doc);
             }
         }
-
-        File[] files = doc.listFiles();
-        for (File file : files) {
-            fileReader(file.getAbsolutePath());
+        else {
+            File[] files = doc.listFiles();
+            for (File file : files) {
+                fileReader(file.getAbsolutePath());
+            }
         }
+
         return listStations;
     }
 
@@ -56,7 +58,7 @@ public class DataCollector {
         JSONArray jsonData = (JSONArray) parser.parse(getJsonFile());
         jsonData.forEach(stationObject -> {
             JSONObject stationJsonObject = (JSONObject) stationObject;
-            String stationName = (String) stationJsonObject.get("name");
+            String stationName = (String) stationJsonObject.get("station_name");
             if (!listStations.containsKey(stationName)) {
                 listStations.put(stationName, new Station(stationName));
             }
@@ -107,19 +109,6 @@ public class DataCollector {
             ex.printStackTrace();
         }
         return builder.toString();
-    }
-
-
-    private String getCsvFile() {
-        StringBuilder builder = new StringBuilder();
-        try {
-            List<String> lines = Files.readAllLines(Paths.get(DATA_FILE));
-            lines.forEach(line -> builder.append(line));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return builder.toString();
-
     }
 
 }
