@@ -56,8 +56,22 @@ public class DataCollector {
     private void getDatesFromJson(File doc) throws ParseException {
         JSONParser parser = new JSONParser();
         JSONArray jsonData = (JSONArray) parser.parse(getJsonFile());
-        jsonData.forEach(stationObject -> {
-            JSONObject stationJsonObject = (JSONObject) stationObject;
+        for (Object it : jsonData) {
+            JSONObject stationJsonObject = (JSONObject) it;
+            String stationName = (String) stationJsonObject.get("station_name");
+            if (!listStations.containsKey(stationName)) {
+                listStations.put(stationName, new Station(stationName));
+            }
+            if (doc.getName().startsWith("dates")) {
+                String date = (String) stationJsonObject.get("dates");
+                listStations.get(stationName).setDate(date);
+            } else if (doc.getName().startsWith("depths")) {
+                Long depth = (Long) stationJsonObject.get("depth_meters");
+                listStations.get(stationName).setDepth(depth);
+            }
+
+        /*jsonData.forEach(JSONObject stationObject -> {
+            //JSONObject stationJsonObject = (JSONObject) stationObject;
             String stationName = (String) stationJsonObject.get("station_name");
             if (!listStations.containsKey(stationName)) {
                 listStations.put(stationName, new Station(stationName));
@@ -67,10 +81,13 @@ public class DataCollector {
                 listStations.get(stationName).setDate(date);
             }
             else if (doc.getName().startsWith("depths")) {
-                String date = (String) stationJsonObject.get("depth_meters");
-                listStations.get(stationName).setDate(date);
+                String depth = (String) stationJsonObject.get("depth_meters");
+                listStations.get(stationName).setDepth(date);
             }
         });
+
+         */
+        }
     }
 
     private void getDatesFromCsv(File doc) throws FileNotFoundException {
@@ -90,7 +107,7 @@ public class DataCollector {
                         if (doc.getName().startsWith("dates")) {
                             listStations.get(stationName).setDate(lines[++i]);
                         } else if (doc.getName().startsWith("depth")) {
-                            listStations.get(stationName).setDepth(lines[++i]);
+                            listStations.get(stationName).setDepth(Long.valueOf(lines[++i]));
                         }
                     }
                 }
