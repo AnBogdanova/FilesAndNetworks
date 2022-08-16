@@ -5,14 +5,14 @@ public class Station implements Comparable<Station>{
     private String name;
     private String lineName;
     private String date;
-    private Long depth;
+    private String depth;
     private boolean hasConnection;
 
     public Station(String name) {
         this.name = name;
     }
 
-    public Station(String name, String lineName, String date, Long depth, boolean hasConnection) {
+    public Station(String name, String lineName, String date, String depth, boolean hasConnection) {
         this.name = name;
         this.lineName = lineName;
         this.date = date;
@@ -33,7 +33,7 @@ public class Station implements Comparable<Station>{
         return date;
     }
 
-    public Long getDepth() {
+    public String getDepth() {
         return depth;
     }
 
@@ -65,7 +65,7 @@ public class Station implements Comparable<Station>{
         this.date = date;
     }
 
-    public void setDepth(Long depth) {
+    public void setDepth(String depth) {
         this.depth = depth;
     }
 

@@ -19,6 +19,7 @@ public class Parser {
     private Document document;
     private List<Line> lines;
     private ContainerStations containerStations;
+    private DataCollector collector;
 
     public Parser(String url) throws Exception {
         document = Jsoup.connect(url).maxBodySize(0).get();
@@ -33,6 +34,8 @@ public class Parser {
     public ContainerStations getContainerStations() {
         return containerStations;
     }
+
+    public DataCollector getDataCollector() { return collector; }
 
     public JSONArray parseLine() {
         Elements linesList = document.getElementsByAttributeValueStarting("class", "js-metro-line t-metrostation-list-header t-icon-metroln ln");

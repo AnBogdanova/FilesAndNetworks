@@ -16,4 +16,6 @@ public class JSONReader {
         });
     }
 
+    public void getLineNameOfStation()
+
 }

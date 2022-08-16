@@ -28,7 +28,8 @@ public class Main {
         jsonReader.getAmountOfStations("FilesAndNetwork/Data__Collector/src/main/resourse/metro.json");
 
         DataCollector collector = new DataCollector();
-        collector.fileReader("/Users/kirill/IdeaProjects/FilesAndNetworks/FilesAndNetwork/Data__Collector/src/main/resourse/data/4/6");
+        collector.fileReader("/Users/kirill/IdeaProjects/FilesAndNetworks/FilesAndNetwork/Data__Collector/src/main/resourse/data");
+        Map<String, Station> listStations = collector.getListStations();
 
 
     }
