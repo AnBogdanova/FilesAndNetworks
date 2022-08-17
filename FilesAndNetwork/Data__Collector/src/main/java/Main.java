@@ -37,10 +37,18 @@ public class Main {
         JSONArray stationsArray = new JSONArray();
         for (Map.Entry<String, Station> entry: listStations.entrySet()) {
             JSONObject stationObj = new JSONObject();
-            stationObj.put("name", entry.getValue().getName());
-            stationObj.put("line", entry.getValue().getLineName());
-            stationObj.put("date", entry.getValue().getDate());
-            stationObj.put("depth", entry.getValue().getDepth());
+            if(entry.getValue().getName()!=null) {
+                stationObj.put("name", entry.getValue().getName());
+            }
+            if (entry.getValue().getLineName()!=null) {
+                stationObj.put("line", entry.getValue().getLineName());
+            }
+            if (entry.getValue().getDate()!=null) {
+                stationObj.put("date", entry.getValue().getDate());
+            }
+            if (entry.getValue().getDepth()!=null) {
+                stationObj.put("depth", entry.getValue().getDepth());
+            }
             stationObj.put("hasConnection", entry.getValue().isHasConnection());
             stationsArray.add(stationObj);
         }
