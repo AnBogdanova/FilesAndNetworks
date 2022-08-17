@@ -13,6 +13,10 @@ public class ContainerStations {
         connections = new TreeSet<>();
     }
 
+    public List<Station> getStations() {
+        return stations;
+    }
+
     public TreeSet<Connections> getConnections() {
         return connections;
     }
